@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>情人节</title>
+        <style>
+            body {
+                margin:0;
+                font-family: Helvetica Neue, Tahoma, Arial, PingFangSC-Regular, Hiragino Sans GB, Microsoft Yahei, sans-serif;
+            }
+            .container {
+                height: 100vh;
+                background: url('../img/1.jpg') no-repeat right;
+                background-size: cover;
+                display:flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                position: relative;
+            }
+
+            .valentine {
+                position: relative;
+                animation: up 3s linear infinite;
+                cursor: pointer;
+            }
+
+            @keyframes up {
+                0%,100% {
+                    transform: translateY(0);
+                }
+                50%{
+                    transform: translateY(-50px);
+                }
+            }
+
+            .envelope {
+                width:450px;
+                height:300px;
+                background-color: rgba(0, 0, 139, 0.5);;
+                position: relative;
+            }
+
+            .envelope::before {
+                content:"";
+                width:318px;
+                height:318px;
+                background-color: rgba(0, 0, 139, 0.5);
+                position: absolute;
+                transform: rotate(-45deg);
+                transform-origin: 0 0;
+                border-top-right-radius: 30px;
+            }
+
+            .front {
+                width:0;
+                height:0;
+                border-top:143px solid transparent;
+                border-bottom:150px solid transparent;
+                border-right:270px solid rgba(0, 0, 0, 0.5);
+                position: absolute;
+                top:6px;
+                left:180px;
+            }
+
+            .front::before {
+                content:"";
+                position: absolute;
+                width:0;
+                height: 0;
+                border-top:293px solid transparent;
+                border-left:450px solid rgba(0, 0, 139, 0.5);
+                top:-142px;
+                left:-180px;
+            }
+
+            .card {
+                width:410px;
+                height:255px;
+                background-color: rgb(255 255 255 / 0.8);
+                position: absolute;
+                top:6px;
+                left:20px;
+                box-shadow: -5px -5px 100px rgb(0 0 0 / 0.5);
+            }
+
+            .txt {
+                padding:30px;
+                font-size:16px;
+                color:#003049;
+            }
+
+            .content {
+                margin-left:20px;
+                margin-top:20px;
+                font-size: 18px;
+            }
+
+            .shadow {
+                width:495px;
+                height:38px;
+                background: rgb( 0 0 0 / 0.3);
+                position: absolute;
+                bottom:120px;
+                border-radius: 50%;
+                animation: shadow-size 3s linear infinite;
+            }
+
+            @keyframes shadow-size {
+                0%,100%{ 
+                    transform: scaleX(1);
+                }
+                50% {
+                    transform: scaleX(0.85);
+                }
+            }
+
+            .overlay {
+                display: none; /* 初始状态隐藏蒙版 */
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+        }
+                   /* 信纸变大的样式 */
+        .card {
+            transition: all 0.5s ease; /* 添加过渡效果 */
+            overflow: hidden; /* 确保文本不会溢出 */
+        
+        }
+
+        /* 被点击后信纸的样式 */
+        .card.open {
+            z-index: 100; /* 确保信纸在最上层 */
+            width: 100%; /* 信纸宽度变为容器的100% */
+            height: auto; /* 高度自动适应内容 */
+            max-height: 100vh; /* 最大高度不超过视窗高度 */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* 居中信纸 */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* 添加一些阴影效果 */
+        }
+
+        .envelope {
+            cursor: pointer; /* 把鼠标指针变成手型 */
+             overflow: hidden; /* 防止信纸在初始状态下溢出信封 */
+        }
+
+        /* 信封打开样式 */
+        .envelope.open::before {
+            display: none; /* 如果信封打开，隐藏用于制作封面的伪元素 */
+        }
+
+
+        </style>
+        <script src="../jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="overlay"></div>
+            <div class="valentine">
+              <div class="envelope"></div>
+              <div class="card">
+                <div class="txt"></div>
+              </div>
+              <div class="front"></div>
+            </div>
+            <div class="shadow"></div>
+
+          </div>
+    </body>
+</html>
+<script src="./jquery.min.js"></script>
+<script>
+        $(".valentine").click(() => {
+            if (!$(".card").hasClass("open")) {
+                $(".card").addClass("open").animate({
+                    top: "50%",
+                    left: "50%"
+                }, "slow");
+                $(".overlay").fadeIn(); // 显示蒙版
+                $(".envelope, .front").addClass("open"); // 信封打开的样式
+                typewriter();
+            } else {
+                $(".card").removeClass("open").animate({
+                    top: "6px",
+                    left: "20px"
+                }, "slow");
+                $(".overlay").fadeOut(); // 隐藏蒙版
+                $(".envelope, .front").removeClass("open");
+            }
+        });
+
+  function typewriter(){
+    const el = $(".txt");
+    const str = `主人:
+        <div class="content" >
+            情人节快乐Ｏ(≧▽≦)Ｏ <br>
+            愿不愿意来做一道题呢<br>
+            给定以下三角函数:<br>
+            f(x)= Asin(kx)+ Bcos(lx)<br>
+            其中A,B,k,和l是常数。这个函数有以下特性:<br>
+            1.Asin(kx)和Bcos(lx)的最小正周期都为π/2<br>
+            2.f(x) 在 x=0 时的导数为12。<br>
+            3.f(x) 在 x=π/2 时的值为3。<br>
+            根据上述信息:<br>
+            求出 A,B,k,和l的值。<br>
+            如果算对答案的话有奖励哦
+        </div>
+    `;
+
+    let progress = 0;
+    const timer = setInterval(() => {
+      const curr = str.substr(progress,1);
+      if(curr === "<"){
+        progress = str.indexOf(">",progress) + 1;
+      } else {
+        progress++;
+      }
+      el.html(str.substring(0,progress) + (progress & 1 ? "_ " : ""));
+      if(progress >= str.length){
+        clearInterval(timer);
+      }
+    },100);
+  }
+</script>
